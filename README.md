@@ -35,15 +35,17 @@
 1. Open Claude Desktop (the app on your computer)
 2. Find Settings
 3. Go to Developer and "edit config"
-4. You can open it in notepad. Make sure your config looks just like this
-{
-  "mcpServers": {
-    "dl-sql-mcp": {
-      "command": "uv",
-      "args": ["tool", "run", "--force-reinstall", "--from", "https://github.com/drivelineresearch/dl_sql_mcp/archive/refs/heads/master.zip", "dl-sql-mcp"]
-    }
-  }
-}
+4. You can open it in notepad. Make sure your config looks just like this:
+   ```json
+   {
+     "mcpServers": {
+       "dl-sql-mcp": {
+         "command": "uv",
+         "args": ["tool", "run", "--force-reinstall", "--from", "https://github.com/drivelineresearch/dl_sql_mcp/archive/refs/heads/master.zip", "dl-sql-mcp"]
+       }
+     }
+   }
+   ```
 5. Click "Save" or "Apply"
 6. Close Claude Desktop completely
 7. Re-open Claude Desktop
