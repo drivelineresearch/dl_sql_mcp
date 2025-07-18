@@ -51,7 +51,7 @@
 1. Start a conversation with Claude Desktop
 2. Claude will automatically create a configuration file
 3. **On Windows:** Press `Windows Key + R`, type `%APPDATA%\dl-sql-mcp` and press Enter
-4. **On Mac:** Press `Command + Space`, type `~/Library/Application Support/dl-sql-mcp` and press Enter
+4. **On Mac:** Press `Command + Space`, type `~/Library/Application\ Support/dl-sql-mcp` and press Enter
 5. You'll see a file called `.env` - double-click it
 6. Change `CHANGE_THIS_TO_YOUR_ACTUAL_PASSWORD` to your real database password
 7. Save the file (Ctrl+S on Windows, Cmd+S on Mac)

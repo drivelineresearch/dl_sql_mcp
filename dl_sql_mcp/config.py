@@ -1,8 +1,18 @@
 import os
+import platform
 from pathlib import Path
 
 # Create app config directory and .env file if they don't exist
-app_config_dir = Path.home() / 'AppData' / 'Roaming' / 'dl-sql-mcp'
+def get_config_dir():
+    """Get the appropriate config directory for the current OS"""
+    if platform.system() == 'Windows':
+        return Path.home() / 'AppData' / 'Roaming' / 'dl-sql-mcp'
+    elif platform.system() == 'Darwin':  # macOS
+        return Path.home() / 'Library' / 'Application Support' / 'dl-sql-mcp'
+    else:  # Linux
+        return Path.home() / '.config' / 'dl-sql-mcp'
+
+app_config_dir = get_config_dir()
 env_file = app_config_dir / '.env'
 
 # Create directory and template .env file on first run
