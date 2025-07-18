@@ -39,7 +39,7 @@
    ```json
    "dl-sql-mcp": {
      "command": "uv",
-     "args": ["tool", "run", "--from", "git+https://github.com/drivelineresearch/dl_sql_mcp", "dl-sql-mcp"]
+     "args": ["tool", "run", "--from", "https://github.com/drivelineresearch/dl_sql_mcp/archive/refs/heads/master.zip", "dl-sql-mcp"]
    }
    ```
 5. Click "Save" or "Apply"
