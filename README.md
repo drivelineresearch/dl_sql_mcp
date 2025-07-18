@@ -10,7 +10,7 @@ Copy this into your Claude Desktop settings (Settings → MCP):
 ```json
 "dl-sql-mcp": {
   "command": "uvx",
-  "args": ["--from", "git+https://github.com/your-org/dl-sql-mcp", "dl-sql-mcp"]
+  "args": ["--from", "git+https://github.com/drivelineresearch/dl_sql_mcp", "dl-sql-mcp"]
 }
 ```
 
