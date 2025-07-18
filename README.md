@@ -1,8 +1,26 @@
 # DL SQL MCP for Claude Desktop
 
-🚀 **One-Click Installation** - Ask any question about baseball biomechanics data in natural language!
+🚀 **Easy Installation** - Ask any question about baseball biomechanics data in natural language!
 
 ## Quick Setup for Trainers
+
+### Step 0: Install uvx (One-time setup)
+If you don't have `uvx` installed:
+
+**Windows:**
+1. Open PowerShell as Administrator
+2. Run: `pip install uv`
+3. Run: `uv tool install uvx`
+4. Add to PATH: `setx PATH "%PATH%;%USERPROFILE%\.local\bin"`
+5. Restart PowerShell
+
+**Mac/Linux:**
+```bash
+pip install uv
+uv tool install uvx
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+```
 
 ### Step 1: Add to Claude Desktop
 Copy this into your Claude Desktop settings (Settings → MCP):
