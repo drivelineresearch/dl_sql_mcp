@@ -4,22 +4,17 @@
 
 ## Quick Setup for Trainers
 
-### Step 0: Install uvx (One-time setup)
-If you don't have `uvx` installed:
+### Step 0: Install uv (One-time setup)
+If you don't have `uv` installed:
 
 **Windows:**
-1. Open PowerShell as Administrator
-2. Run: `pip install uv`
-3. Run: `uv tool install uvx`
-4. Add to PATH: `setx PATH "%PATH%;%USERPROFILE%\.local\bin"`
-5. Restart PowerShell
+```powershell
+pip install uv
+```
 
 **Mac/Linux:**
 ```bash
 pip install uv
-uv tool install uvx
-echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
-source ~/.bashrc
 ```
 
 ### Step 1: Add to Claude Desktop
@@ -27,8 +22,8 @@ Copy this into your Claude Desktop settings (Settings → MCP):
 
 ```json
 "dl-sql-mcp": {
-  "command": "uvx",
-  "args": ["--from", "git+https://github.com/drivelineresearch/dl_sql_mcp", "dl-sql-mcp"]
+  "command": "uv",
+  "args": ["tool", "run", "--from", "git+https://github.com/drivelineresearch/dl_sql_mcp", "dl-sql-mcp"]
 }
 ```
 
