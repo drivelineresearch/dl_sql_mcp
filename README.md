@@ -2,39 +2,79 @@
 
 🚀 **Easy Installation** - Ask any question about baseball biomechanics data in natural language!
 
-## Quick Setup for Trainers
+## Complete Beginner Installation Guide
 
-### Step 0: Install uv (One-time setup)
-If you don't have `uv` installed:
+### For People With ZERO Technical Knowledge
 
-**Windows:**
-```powershell
-pip install uv
-```
+### STEP 1: Install uv (5 minutes)
 
-**Mac/Linux:**
-```bash
-pip install uv
-```
+**If you have Windows:**
+1. Press `Windows Key + R` on your keyboard
+2. Type `powershell` and press Enter
+3. A blue window will open (this is PowerShell)
+4. Copy and paste this EXACT text:
+   ```
+   powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+   ```
+5. Press Enter and wait (it will download and install automatically)
+6. Close the blue window when it's done
 
-### Step 1: Add to Claude Desktop
-Copy this into your Claude Desktop settings (Settings → MCP):
+**If you have Mac:**
+1. Press `Command + Space` on your keyboard
+2. Type `terminal` and press Enter
+3. A black window will open (this is Terminal)
+4. Copy and paste this EXACT text:
+   ```
+   curl -LsSf https://astral.sh/uv/install.sh | sh
+   ```
+5. Press Enter and wait (it will download and install automatically)
+6. Close the black window when it's done
 
-```json
-"dl-sql-mcp": {
-  "command": "uv",
-  "args": ["tool", "run", "--from", "git+https://github.com/drivelineresearch/dl_sql_mcp", "dl-sql-mcp"]
-}
-```
+### STEP 2: Add to Claude Desktop (2 minutes)
 
-### Step 2: Set Database Password
-On first run, the app will create a config file at:
-`C:\Users\[username]\AppData\Roaming\dl-sql-mcp\.env`
+1. Open Claude Desktop (the app on your computer)
+2. Click the gear icon ⚙️ in the bottom left corner
+3. Click "MCP" in the menu that appears
+4. You'll see a text box - copy and paste this EXACT text:
+   ```json
+   "dl-sql-mcp": {
+     "command": "uv",
+     "args": ["tool", "run", "--from", "git+https://github.com/drivelineresearch/dl_sql_mcp", "dl-sql-mcp"]
+   }
+   ```
+5. Click "Save" or "Apply"
+6. Close Claude Desktop completely
+7. Re-open Claude Desktop
 
-Open this file and change `CHANGE_THIS_TO_YOUR_ACTUAL_PASSWORD` to your real database password.
+### STEP 3: Set Your Database Password (2 minutes)
 
-### Step 3: Start Asking Questions!
-That's it! You can now ask Claude:
+1. Start a conversation with Claude Desktop
+2. Claude will automatically create a configuration file
+3. **On Windows:** Press `Windows Key + R`, type `%APPDATA%\dl-sql-mcp` and press Enter
+4. **On Mac:** Press `Command + Space`, type `~/Library/Application Support/dl-sql-mcp` and press Enter
+5. You'll see a file called `.env` - double-click it
+6. Change `CHANGE_THIS_TO_YOUR_ACTUAL_PASSWORD` to your real database password
+7. Save the file (Ctrl+S on Windows, Cmd+S on Mac)
+8. Close Claude Desktop and re-open it
+
+### STEP 4: Test It Works (30 seconds)
+
+Ask Claude: **"Show me all players in the database"**
+
+If it works, you're done! If not, contact IT support.
+
+---
+
+## What Did We Just Do?
+
+- **Step 1:** Installed a tool that can download and run programs from the internet
+- **Step 2:** Told Claude Desktop where to find your baseball data program
+- **Step 3:** Gave the program your database password so it can access your data
+- **Step 4:** Tested that everything works
+
+**Total Time:** 10 minutes maximum
+
+## Now You Can Ask Questions Like:
 
 ## Example Questions
 
