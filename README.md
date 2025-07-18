@@ -130,17 +130,63 @@ The system automatically:
 
 ## Troubleshooting
 
-**Connection Issues?**
-- Check your `.env` file has correct database credentials
-- Ensure you're on the network that can reach the database
+### Common Issues and Solutions
 
-**Installation Problems?**
-- Make sure you have Python 3.10+ installed
-- Try restarting Claude Desktop after adding the configuration
+**🔧 Claude Desktop Won't Start After Adding MCP Server**
+1. **Close Claude Desktop completely** (quit the application)
+2. **Re-open Claude Desktop** - it should create the `.env` file automatically
+3. If it still crashes, check the logs:
+   - **Windows:** `%APPDATA%\Claude\Logs\mcp-server-dl-sql-mcp.log`
+   - **Mac:** `/Users/YOUR_USERNAME/Library/Logs/Claude/mcp-server-dl-sql-mcp.log`
 
-**Questions Not Working?**
-- Be specific about player names and what you want to analyze
-- Try simpler questions first, then build up complexity
+**📁 Can't Find the .env File?**
+- **On Windows:** Press `Windows Key + R`, type `%APPDATA%\dl-sql-mcp` and press Enter
+- **On Mac:** Press `Command + Space`, type `~/Library/Application\ Support/dl-sql-mcp` and press Enter
+- **In Windows Explorer:** Show hidden files (View → Hidden items)
+- **In Mac Finder:** Press `Command + Shift + .` (period) to show hidden files
+- **Alternative commands:**
+  - **Windows:** `explorer %APPDATA%\dl-sql-mcp`
+  - **Mac:** `open ~/Library/Application\ Support/dl-sql-mcp`
+- If the folder doesn't exist, restart Claude Desktop once more
+
+**🔗 Database Connection Issues**
+- **"Can't connect to MySQL server"** error:
+  1. Connect to your organization's VPN first
+  2. Verify you can reach the database server:
+     - **Windows:** `ping 10.200.200.107` in Command Prompt
+     - **Mac:** `ping 10.200.200.107` in Terminal
+  3. Check your `.env` file has the correct password (not `CHANGE_THIS_TO_YOUR_ACTUAL_PASSWORD`)
+  4. Contact IT support if network issues persist
+
+**🔄 How Many Times to Restart Claude Desktop?**
+- **After adding MCP config:** Restart once to create `.env` file
+- **After editing password:** Restart once to pick up new credentials
+- **If still having issues:** Restart one more time after VPN connection
+- **Total expected restarts:** 2-3 times maximum
+
+**⚠️ Server Keeps Disconnecting**
+- Check you're connected to the correct network/VPN
+- Verify your database credentials are correct
+- Look for "Successfully connected" messages in the logs
+- If you see "TaskGroup" errors, try restarting Claude Desktop
+
+**🐛 Still Having Problems?**
+1. **Check the logs:**
+   - **Windows:** `%APPDATA%\Claude\Logs\mcp-server-dl-sql-mcp.log`
+   - **Mac:** `/Users/YOUR_USERNAME/Library/Logs/Claude/mcp-server-dl-sql-mcp.log`
+2. **Look for these success messages:**
+   - "Created config file at: ..."
+   - "Successfully connected to theia_pitching_db!"
+   - "Successfully connected to theia_hitting_db!"
+3. **Common error patterns:**
+   - "Database password not configured" → Edit your `.env` file
+   - "Can't connect to MySQL server" → Check VPN connection
+   - "Request timed out" → Restart Claude Desktop
+
+**📞 Need Help?**
+- Contact your technical administrator
+- Include the contents of your log file when reporting issues
+- Verify player names exist in the system before querying
 
 ## Support
 
