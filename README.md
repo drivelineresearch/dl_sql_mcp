@@ -6,7 +6,7 @@
 
 ### For People With ZERO Technical Knowledge
 
-### STEP 1: Install uv (5 minutes)
+### STEP 1: Install uv (2 minutes)
 
 **If you have Windows:**
 1. Press `Windows Key + R` on your keyboard
@@ -33,15 +33,17 @@
 ### STEP 2: Add to Claude Desktop (2 minutes)
 
 1. Open Claude Desktop (the app on your computer)
-2. Click the gear icon ⚙️ in the bottom left corner
-3. Click "MCP" in the menu that appears
-4. You'll see a text box - copy and paste this EXACT text:
-   ```json
-   "dl-sql-mcp": {
-     "command": "uv",
-     "args": ["tool", "run", "--from", "https://github.com/drivelineresearch/dl_sql_mcp/archive/refs/heads/master.zip", "dl-sql-mcp"]
-   }
-   ```
+2. Find Settings
+3. Go to Developer and "edit config"
+4. You can open it in notepad. Make sure your config looks just like this
+{
+  "mcpServers": {
+    "dl-sql-mcp": {
+      "command": "uv",
+      "args": ["tool", "run", "--force-reinstall", "--from", "https://github.com/drivelineresearch/dl_sql_mcp/archive/refs/heads/master.zip", "dl-sql-mcp"]
+    }
+  }
+}
 5. Click "Save" or "Apply"
 6. Close Claude Desktop completely
 7. Re-open Claude Desktop
@@ -53,7 +55,7 @@
 3. **On Windows:** Press `Windows Key + R`, type `%APPDATA%\dl-sql-mcp` and press Enter
 4. **On Mac:** Press `Command + Space`, type `~/Library/Application\ Support/dl-sql-mcp` and press Enter
 5. You'll see a file called `.env` - double-click it
-6. Change `CHANGE_THIS_TO_YOUR_ACTUAL_PASSWORD` to your real database password
+6. Change `CHANGE_THIS_TO_YOUR_ACTUAL_PASSWORD` to your real database password (ask alex or someone if you can't find)
 7. Save the file (Ctrl+S on Windows, Cmd+S on Mac)
 8. Close Claude Desktop and re-open it
 
