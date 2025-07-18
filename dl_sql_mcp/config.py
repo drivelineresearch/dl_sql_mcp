@@ -2,7 +2,6 @@ import os
 import platform
 from pathlib import Path
 
-# Create app config directory and .env file if they don't exist
 def get_config_dir():
     """Get the appropriate config directory for the current OS"""
     if platform.system() == 'Windows':
@@ -12,33 +11,46 @@ def get_config_dir():
     else:  # Linux
         return Path.home() / '.config' / 'dl-sql-mcp'
 
-app_config_dir = get_config_dir()
-env_file = app_config_dir / '.env'
-
-# Create directory and template .env file on first run
-if not app_config_dir.exists():
-    app_config_dir.mkdir(parents=True, exist_ok=True)
+def initialize_config():
+    """Initialize config directory and .env file"""
+    app_config_dir = get_config_dir()
+    env_file = app_config_dir / '.env'
     
-if not env_file.exists():
-    template_content = """# DL SQL MCP Database Configuration
+    # Create directory and template .env file on first run
+    if not app_config_dir.exists():
+        app_config_dir.mkdir(parents=True, exist_ok=True)
+        print(f"INFO: Created config directory at: {app_config_dir}", file=sys.stderr)
+    
+    if not env_file.exists():
+        template_content = """# DL SQL MCP Database Configuration
 # Edit the values below with your actual database credentials
 
 DB_HOST=10.200.200.107
 DB_USER=readonlyuser
 DB_PASSWORD=CHANGE_THIS_TO_YOUR_ACTUAL_PASSWORD
 """
-    with open(env_file, 'w') as f:
-        f.write(template_content)
-    print(f"INFO: Created config file at: {env_file}")
-    print("INFO: Please edit this file with your actual database password")
+        with open(env_file, 'w') as f:
+            f.write(template_content)
+        print(f"INFO: Created config file at: {env_file}", file=sys.stderr)
+        print("INFO: Please edit this file with your actual database password", file=sys.stderr)
+        return False  # Indicate that config was just created
+    
+    return True  # Config already exists
 
-# Load environment variables from .env file
-if env_file.exists():
-    with open(env_file) as f:
-        for line in f:
-            if line.strip() and not line.startswith('#'):
-                key, value = line.strip().split('=', 1)
-                os.environ[key] = value
+def load_env_variables():
+    """Load environment variables from .env file"""
+    env_file = get_config_dir() / '.env'
+    if env_file.exists():
+        with open(env_file) as f:
+            for line in f:
+                if line.strip() and not line.startswith('#'):
+                    key, value = line.strip().split('=', 1)
+                    os.environ[key] = value
+
+# Initialize config on import
+import sys
+config_exists = initialize_config()
+load_env_variables()
 
 # Database configuration
 DATABASE_CONFIG = {
@@ -48,7 +60,8 @@ DATABASE_CONFIG = {
     'databases': ['theia_pitching_db', 'theia_hitting_db'],
     'autocommit': True,
     'connect_timeout': 30,
-    'pool_recycle': 3600
+    'pool_recycle': 3600,
+    'config_file': str(get_config_dir() / '.env')
 }
 
 def log_error(message):

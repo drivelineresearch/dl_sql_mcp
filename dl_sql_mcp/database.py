@@ -8,6 +8,16 @@ async def get_db_pools():
     """Create connection pools for all databases"""
     pools = {}
     
+    # Check if credentials are configured
+    if not DATABASE_CONFIG['password'] or DATABASE_CONFIG['password'] == 'CHANGE_THIS_TO_YOUR_ACTUAL_PASSWORD':
+        log_error("Database password not configured. Please edit your .env file.")
+        log_error(f"Config file location: {DATABASE_CONFIG.get('config_file', 'Unknown')}")
+        return pools
+    
+    if not DATABASE_CONFIG['host'] or not DATABASE_CONFIG['user']:
+        log_error("Database connection details incomplete.")
+        return pools
+    
     for db_name in DATABASE_CONFIG['databases']:
         try:
             log_info(f"Attempting to connect to {db_name}...")
