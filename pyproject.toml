@@ -1,0 +1,41 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "dl-sql-mcp"
+version = "1.0.0"
+description = "Intelligent baseball biomechanics analysis for Claude Desktop"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Driveline Baseball", email = "support@drivelinebaseball.com"}
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Other Audience",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+requires-python = ">=3.10"
+dependencies = [
+    "fastmcp>=2.1.1",
+    "aiomysql>=0.2.0",
+    "mcp[cli]>=1.6.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/drivelineresearch/dl_sql_mcp"
+Documentation = "https://github.com/drivelineresearch/dl_sql_mcp#readme"
+Repository = "https://github.com/drivelineresearch/dl_sql_mcp"
+Issues = "https://github.com/drivelineresearch/dl_sql_mcp/issues"
+
+[project.scripts]
+dl-sql-mcp = "dl_sql_mcp.main:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["dl_sql_mcp"]

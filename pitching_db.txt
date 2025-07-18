@@ -1,0 +1,1173 @@
+-- --------------------------------------------------------
+-- Host:                         10.200.200.107
+-- Server version:               10.6.18-MariaDB-0ubuntu0.22.04.1 - Ubuntu 22.04
+-- Server OS:                    debian-linux-gnu
+-- HeidiSQL Version:             12.1.0.6537
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+-- Dumping database structure for theia_pitching_db
+CREATE DATABASE IF NOT EXISTS `theia_pitching_db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
+USE `theia_pitching_db`;
+
+-- Dumping structure for table theia_pitching_db.ang_vels_raw
+CREATE TABLE IF NOT EXISTS `ang_vels_raw` (
+  `k_id` int(11) NOT NULL AUTO_INCREMENT,
+  `session_trial` varchar(10) NOT NULL,
+  `lar_angVel` blob DEFAULT NULL,
+  `lfa_angVel` blob DEFAULT NULL,
+  `lft_angVel` blob DEFAULT NULL,
+  `lha_angVel` blob DEFAULT NULL,
+  `lsk_angVel` blob DEFAULT NULL,
+  `lth_angVel` blob DEFAULT NULL,
+  `lto_angVel` blob DEFAULT NULL,
+  `rar_angVel` blob DEFAULT NULL,
+  `rfa_angVel` blob DEFAULT NULL,
+  `rft_angVel` blob DEFAULT NULL,
+  `rha_angVel` blob DEFAULT NULL,
+  `rhe_angVel` blob DEFAULT NULL,
+  `rpv_angVel` blob DEFAULT NULL,
+  `rsk_angVel` blob DEFAULT NULL,
+  `rta_angVel` blob DEFAULT NULL,
+  `rth_angVel` blob DEFAULT NULL,
+  `rto_angVel` blob DEFAULT NULL,
+  `rtx_angVel` blob DEFAULT NULL,
+  PRIMARY KEY (`k_id`),
+  UNIQUE KEY `ang_vels_raw_unique` (`session_trial`),
+  CONSTRAINT `ang_vels_raw_ibfk_1` FOREIGN KEY (`session_trial`) REFERENCES `trials` (`session_trial`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=37434 DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.calculated_metrics
+CREATE TABLE IF NOT EXISTS `calculated_metrics` (
+  `session_trial` varchar(30) NOT NULL,
+  `session` int(11) NOT NULL,
+  `cog_decel_resid` decimal(10,4) DEFAULT NULL,
+  `comp_score_arm_action` decimal(10,4) DEFAULT NULL,
+  `comp_score_cog` decimal(10,4) DEFAULT NULL,
+  `comp_score_block` decimal(10,4) DEFAULT NULL,
+  `comp_score_rot_velos` decimal(10,4) DEFAULT NULL,
+  `comp_score_arm_velos` decimal(10,4) DEFAULT NULL,
+  `comp_score_posture` decimal(10,4) DEFAULT NULL,
+  `comp_score_mechanics_total` decimal(10,4) DEFAULT NULL,
+  `ratio_elbow_varus` decimal(10,4) DEFAULT NULL,
+  `ratio_elbow_transfer` decimal(10,4) DEFAULT NULL,
+  `ratio_shoulder_transfer` decimal(10,4) DEFAULT NULL,
+  `velo_bw_adj` decimal(10,4) DEFAULT NULL,
+  `rear_grf_x_max_bw_adj` decimal(10,4) DEFAULT NULL,
+  `rear_grf_y_max_bw_adj` decimal(10,4) DEFAULT NULL,
+  `rear_grf_z_max_bw_adj` decimal(10,4) DEFAULT NULL,
+  `rear_grf_mag_max_bw_adj` decimal(10,4) DEFAULT NULL,
+  `peak_rfd_rear_bw_adj` decimal(10,4) DEFAULT NULL,
+  `lead_grf_x_max_bw_adj` decimal(10,4) DEFAULT NULL,
+  `lead_grf_y_max_bw_adj` decimal(10,4) DEFAULT NULL,
+  `lead_grf_z_max_bw_adj` decimal(10,4) DEFAULT NULL,
+  `lead_grf_mag_max_bw_adj` decimal(10,4) DEFAULT NULL,
+  `peak_rfd_lead_bw_adj` decimal(10,4) DEFAULT NULL,
+  `shoulder_transfer_fp_br_bw_adj` decimal(10,4) DEFAULT NULL,
+  `shoulder_generation_fp_br_bw_adj` decimal(10,4) DEFAULT NULL,
+  `shoulder_absorption_fp_br_bw_adj` decimal(10,4) DEFAULT NULL,
+  `elbow_transfer_fp_br_bw_adj` decimal(10,4) DEFAULT NULL,
+  `elbow_generation_fp_br_bw_adj` decimal(10,4) DEFAULT NULL,
+  `elbow_absorption_fp_br_bw_adj` decimal(10,4) DEFAULT NULL,
+  `lead_hip_transfer_fp_br_bw_adj` decimal(10,4) DEFAULT NULL,
+  `lead_hip_generation_fp_br_bw_adj` decimal(10,4) DEFAULT NULL,
+  `lead_hip_absorption_fp_br_bw_adj` decimal(10,4) DEFAULT NULL,
+  `lead_knee_transfer_fp_br_bw_adj` decimal(10,4) DEFAULT NULL,
+  `lead_knee_generation_fp_br_bw_adj` decimal(10,4) DEFAULT NULL,
+  `lead_knee_absorption_fp_br_bw_adj` decimal(10,4) DEFAULT NULL,
+  `rear_hip_transfer_pkh_fp_bw_adj` decimal(10,4) DEFAULT NULL,
+  `rear_hip_generation_pkh_fp_bw_adj` decimal(10,4) DEFAULT NULL,
+  `rear_hip_absorption_pkh_fp_bw_adj` decimal(10,4) DEFAULT NULL,
+  `rear_knee_transfer_pkh_fp_bw_adj` decimal(10,4) DEFAULT NULL,
+  `rear_knee_generation_pkh_fp_bw_adj` decimal(10,4) DEFAULT NULL,
+  `rear_knee_absorption_pkh_fp_bw_adj` decimal(10,4) DEFAULT NULL,
+  `pelvis_lumbar_transfer_fp_br_bw_adj` decimal(10,4) DEFAULT NULL,
+  `thorax_distal_transfer_fp_br_bw_adj` decimal(10,4) DEFAULT NULL,
+  PRIMARY KEY (`session_trial`) USING BTREE,
+  KEY `calc_session_fk` (`session`) USING BTREE,
+  CONSTRAINT `calc_session_fk` FOREIGN KEY (`session`) REFERENCES `sessions` (`session`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.cal_results
+CREATE TABLE IF NOT EXISTS `cal_results` (
+  `cal_name` varchar(512) NOT NULL,
+  `location` varchar(64) NOT NULL,
+  `date` date NOT NULL,
+  `unixts` varchar(64) NOT NULL,
+  `best_cal` tinyint(1) NOT NULL DEFAULT 0,
+  `result` tinyint(1) NOT NULL DEFAULT 0,
+  `rmse_diagonal` decimal(10,6) DEFAULT NULL,
+  `rmse_angle` decimal(10,6) DEFAULT NULL,
+  `origin_frame` smallint(6) DEFAULT NULL,
+  `cam1_frames` smallint(6) DEFAULT NULL,
+  `cam2_frames` smallint(6) DEFAULT NULL,
+  `cam3_frames` smallint(6) DEFAULT NULL,
+  `cam4_frames` smallint(6) DEFAULT NULL,
+  `cam5_frames` smallint(6) DEFAULT NULL,
+  `cam6_frames` smallint(6) DEFAULT NULL,
+  `cam7_frames` smallint(6) DEFAULT NULL,
+  `cam8_frames` smallint(6) DEFAULT NULL,
+  `created` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`cal_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.comp_scores_models_wass
+CREATE TABLE IF NOT EXISTS `comp_scores_models_wass` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `models` mediumblob DEFAULT NULL,
+  `summaries` mediumblob DEFAULT NULL,
+  `updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.comp_scores_mph
+CREATE TABLE IF NOT EXISTS `comp_scores_mph` (
+  `session_trial` text DEFAULT NULL,
+  `arm_action` double DEFAULT NULL,
+  `block` double DEFAULT NULL,
+  `cog` double DEFAULT NULL,
+  `posture` double DEFAULT NULL,
+  `rot` double DEFAULT NULL,
+  `total` double DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.comp_scores_plus
+CREATE TABLE IF NOT EXISTS `comp_scores_plus` (
+  `session_trial` text DEFAULT NULL,
+  `arm_action` double DEFAULT NULL,
+  `block` double DEFAULT NULL,
+  `cog` double DEFAULT NULL,
+  `posture` double DEFAULT NULL,
+  `rot` double DEFAULT NULL,
+  `total` double DEFAULT NULL,
+  `observed_velo` double DEFAULT NULL,
+  `velo_w_avg_mech` double DEFAULT NULL,
+  `velo_ceiling` double DEFAULT NULL,
+  `cog_decel_resid` double DEFAULT NULL,
+  `COG_decel` double DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.Comp_Scores_Plus_Roy
+CREATE TABLE IF NOT EXISTS `Comp_Scores_Plus_Roy` (
+  `session_trial` text DEFAULT NULL,
+  `total_score` double DEFAULT NULL,
+  `arm_action_score` double DEFAULT NULL,
+  `cog_score` double DEFAULT NULL,
+  `block_score` double DEFAULT NULL,
+  `rot_score` double DEFAULT NULL,
+  `arm_velos_score` double DEFAULT NULL,
+  `posture_score` double DEFAULT NULL,
+  `wt_velo_score` double DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.comp_score_percentiles
+CREATE TABLE IF NOT EXISTS `comp_score_percentiles` (
+  `percentile` int(11) DEFAULT NULL,
+  `max_shoulder_external_rotation` double DEFAULT NULL,
+  `shoulder_horizontal_abduction_fp` double DEFAULT NULL,
+  `elbow_flexion_fp` double DEFAULT NULL,
+  `shoulder_abduction_fp` double DEFAULT NULL,
+  `shoulder_external_rotation_fp` double DEFAULT NULL,
+  `max_shoulder_internal_rotational_velo` double DEFAULT NULL,
+  `max_elbow_extension_velo` double DEFAULT NULL,
+  `cog_velo_pkh` double DEFAULT NULL,
+  `max_cog_velo_x` double DEFAULT NULL,
+  `COG_decel` double DEFAULT NULL,
+  `cog_decel_resid` double DEFAULT NULL,
+  `lead_knee_extension_from_fp_to_br` double DEFAULT NULL,
+  `lead_knee_extension_angular_velo_br` double DEFAULT NULL,
+  `stride_length` double DEFAULT NULL,
+  `lead_knee_extension_angular_velo_max` double DEFAULT NULL,
+  `max_torso_rotational_velo` double DEFAULT NULL,
+  `max_pelvis_rotational_velo` double DEFAULT NULL,
+  `rotation_hip_shoulder_separation_fp` double DEFAULT NULL,
+  `max_rotation_hip_shoulder_separation` double DEFAULT NULL,
+  `torso_anterior_tilt_br` double DEFAULT NULL,
+  `torso_lateral_tilt_br` double DEFAULT NULL,
+  `torso_rotation_br` double DEFAULT NULL,
+  `torso_anterior_tilt_mer` double DEFAULT NULL,
+  `torso_lateral_tilt_mer` double DEFAULT NULL,
+  `torso_rotation_mer` double DEFAULT NULL,
+  `torso_anterior_tilt_fp` double DEFAULT NULL,
+  `torso_lateral_tilt_fp` double DEFAULT NULL,
+  `torso_rotation_fp` double DEFAULT NULL,
+  `torso_rotation_min` double DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.drillscores
+CREATE TABLE IF NOT EXISTS `drillscores` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `traqid` int(6) NOT NULL,
+  `session` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `num_flags` tinyint(4) NOT NULL,
+  `flags` longtext NOT NULL,
+  `pitch_speed_mph_score` decimal(10,4) NOT NULL,
+  `pitch_speed_mph_diff` decimal(10,4) NOT NULL,
+  `max_torso_rotational_velo_score` decimal(10,4) NOT NULL,
+  `max_torso_rotational_velo_diff` decimal(10,4) NOT NULL,
+  `max_elbow_extension_velo_score` decimal(10,4) NOT NULL,
+  `max_elbow_extension_velo_diff` decimal(10,4) NOT NULL,
+  `max_shoulder_internal_rotational_velo_score` decimal(10,4) NOT NULL,
+  `max_shoulder_internal_rotational_velo_diff` decimal(10,4) NOT NULL,
+  `max_rotation_hip_shoulder_separation_score` decimal(10,4) NOT NULL,
+  `max_rotation_hip_shoulder_separation_diff` decimal(10,4) NOT NULL,
+  `max_shoulder_external_rotation_score` decimal(10,4) NOT NULL,
+  `max_shoulder_external_rotation_diff` decimal(10,4) NOT NULL,
+  `max_elbow_flexion_score` decimal(10,4) NOT NULL,
+  `max_elbow_flexion_diff` decimal(10,4) NOT NULL,
+  `lead_knee_extension_angular_velo_fp_score` decimal(10,4) NOT NULL,
+  `lead_knee_extension_angular_velo_fp_diff` decimal(10,4) NOT NULL,
+  `rotation_hip_shoulder_separation_fp_score` decimal(10,4) NOT NULL,
+  `rotation_hip_shoulder_separation_fp_diff` decimal(10,4) NOT NULL,
+  `shoulder_horizontal_abduction_fp_score` decimal(10,4) NOT NULL,
+  `shoulder_horizontal_abduction_fp_diff` decimal(10,4) NOT NULL,
+  `elbow_flexion_fp_score` decimal(10,4) NOT NULL,
+  `elbow_flexion_fp_diff` decimal(10,4) NOT NULL,
+  `drillscores` longtext NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `session` (`session`)
+) ENGINE=InnoDB AUTO_INCREMENT=1899 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.energetics
+CREATE TABLE IF NOT EXISTS `energetics` (
+  `energetic_id` int(11) NOT NULL AUTO_INCREMENT,
+  `session_trial` varchar(10) NOT NULL,
+  `time` decimal(10,4) NOT NULL,
+  `rear_ankle_energy_transfer` decimal(10,4) DEFAULT NULL,
+  `rear_ankle_energy_generation` decimal(10,4) DEFAULT NULL,
+  `lead_ankle_energy_transfer` decimal(10,4) DEFAULT NULL,
+  `lead_ankle_energy_generation` decimal(10,4) DEFAULT NULL,
+  `rear_knee_energy_transfer` decimal(10,4) DEFAULT NULL,
+  `rear_knee_energy_generation` decimal(10,4) DEFAULT NULL,
+  `lead_knee_energy_transfer` decimal(10,4) DEFAULT NULL,
+  `lead_knee_energy_generation` decimal(10,4) DEFAULT NULL,
+  `rear_hip_energy_transfer` decimal(10,4) DEFAULT NULL,
+  `rear_hip_energy_generation` decimal(10,4) DEFAULT NULL,
+  `lead_hip_energy_transfer` decimal(10,4) DEFAULT NULL,
+  `lead_hip_energy_generation` decimal(10,4) DEFAULT NULL,
+  `glove_shoulder_energy_transfer` decimal(10,4) DEFAULT NULL,
+  `glove_shoulder_energy_generation` decimal(10,4) DEFAULT NULL,
+  `shoulder_energy_transfer` decimal(10,4) DEFAULT NULL,
+  `shoulder_energy_generation` decimal(10,4) DEFAULT NULL,
+  `glove_elbow_energy_transfer` decimal(10,4) DEFAULT NULL,
+  `glove_elbow_energy_generation` decimal(10,4) DEFAULT NULL,
+  `elbow_energy_transfer` decimal(10,4) DEFAULT NULL,
+  `elbow_energy_generation` decimal(10,4) DEFAULT NULL,
+  `glove_wrist_energy_transfer` decimal(10,4) DEFAULT NULL,
+  `glove_wrist_energy_generation` decimal(10,4) DEFAULT NULL,
+  `wrist_energy_transfer` decimal(10,4) DEFAULT NULL,
+  `wrist_energy_generation` decimal(10,4) DEFAULT NULL,
+  `l5s1_energy_outflow` decimal(10,4) DEFAULT NULL,
+  `proximal_thorax_energy_inflow` decimal(10,4) DEFAULT NULL,
+  PRIMARY KEY (`energetic_id`),
+  UNIQUE KEY `energetics_unique` (`session_trial`,`time`),
+  CONSTRAINT `energetics_ibfk_1` FOREIGN KEY (`session_trial`) REFERENCES `trials` (`session_trial`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=19872662 DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.events
+CREATE TABLE IF NOT EXISTS `events` (
+  `event_id` int(11) NOT NULL AUTO_INCREMENT,
+  `session_trial` varchar(10) NOT NULL,
+  `PKH_time` decimal(10,4) DEFAULT NULL,
+  `PWV_time` decimal(10,4) DEFAULT NULL,
+  `PAV_time` decimal(10,4) DEFAULT NULL,
+  `MER_time` decimal(10,4) DEFAULT NULL,
+  `MIR_time` decimal(10,4) DEFAULT NULL,
+  `BR_time` decimal(10,4) DEFAULT NULL,
+  `FP_v5_time` decimal(10,4) DEFAULT NULL,
+  `MAD_time` decimal(10,4) DEFAULT NULL,
+  `TRO_time` decimal(10,4) DEFAULT NULL,
+  `FP_v6_time` decimal(10,4) DEFAULT NULL,
+  `i_PKH` smallint(6) DEFAULT NULL,
+  `i_PWV` smallint(6) DEFAULT NULL,
+  `i_PAV` smallint(6) DEFAULT NULL,
+  `i_MER` smallint(6) DEFAULT NULL,
+  `i_MIR` smallint(6) DEFAULT NULL,
+  `i_BR` smallint(6) DEFAULT NULL,
+  `i_FP_v5` smallint(6) DEFAULT NULL,
+  `i_MAD` smallint(6) DEFAULT NULL,
+  `i_TRO` smallint(6) DEFAULT NULL,
+  `i_FP_v6` smallint(6) DEFAULT NULL,
+  PRIMARY KEY (`event_id`),
+  UNIQUE KEY `events_unique` (`session_trial`),
+  CONSTRAINT `events_ibfk_1` FOREIGN KEY (`session_trial`) REFERENCES `trials` (`session_trial`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=56250 DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.fit_lines
+CREATE TABLE IF NOT EXISTS `fit_lines` (
+  `id` bigint(20) DEFAULT NULL,
+  `traq_id` text DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `session` bigint(20) DEFAULT NULL,
+  `payload` text DEFAULT NULL,
+  KEY `ix_fit_lines_id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.force_plates
+CREATE TABLE IF NOT EXISTS `force_plates` (
+  `forceplate_id` int(11) NOT NULL AUTO_INCREMENT,
+  `session_trial` varchar(10) NOT NULL,
+  `time` decimal(10,4) NOT NULL,
+  `rear_force_x` decimal(10,4) DEFAULT NULL,
+  `rear_force_y` decimal(10,4) DEFAULT NULL,
+  `rear_force_z` decimal(10,4) DEFAULT NULL,
+  `rear_force_mag` decimal(10,4) DEFAULT NULL,
+  `rear_freemoment_x` decimal(10,4) DEFAULT NULL,
+  `rear_freemoment_y` decimal(10,4) DEFAULT NULL,
+  `rear_freemoment_z` decimal(10,4) DEFAULT NULL,
+  `rear_cofp_x` decimal(10,4) DEFAULT NULL,
+  `rear_cofp_y` decimal(10,4) DEFAULT NULL,
+  `lead_force_x` decimal(10,4) DEFAULT NULL,
+  `lead_force_y` decimal(10,4) DEFAULT NULL,
+  `lead_force_z` decimal(10,4) DEFAULT NULL,
+  `lead_force_mag` decimal(10,4) DEFAULT NULL,
+  `lead_cofp_x` decimal(10,4) DEFAULT NULL,
+  `lead_cofp_y` decimal(10,4) DEFAULT NULL,
+  `rear_force_angle` decimal(10,4) DEFAULT NULL,
+  `lead_force_angle` decimal(10,4) DEFAULT NULL,
+  PRIMARY KEY (`forceplate_id`),
+  UNIQUE KEY `force_plates_unique` (`session_trial`,`time`),
+  CONSTRAINT `force_plates_ibfk_1` FOREIGN KEY (`session_trial`) REFERENCES `trials` (`session_trial`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.force_plates_raw
+CREATE TABLE IF NOT EXISTS `force_plates_raw` (
+  `fp_id` int(11) NOT NULL AUTO_INCREMENT,
+  `session_trial` varchar(10) NOT NULL,
+  `fx1` blob DEFAULT NULL,
+  `fy1` blob DEFAULT NULL,
+  `fz1` blob DEFAULT NULL,
+  `fx2` blob DEFAULT NULL,
+  `fy2` blob DEFAULT NULL,
+  `fz2` blob DEFAULT NULL,
+  `fx3` blob DEFAULT NULL,
+  `fy3` blob DEFAULT NULL,
+  `fz3` blob DEFAULT NULL,
+  `mx1` blob DEFAULT NULL,
+  `my1` blob DEFAULT NULL,
+  `mz1` blob DEFAULT NULL,
+  `mx2` blob DEFAULT NULL,
+  `my2` blob DEFAULT NULL,
+  `mz2` blob DEFAULT NULL,
+  `mx3` blob DEFAULT NULL,
+  `my3` blob DEFAULT NULL,
+  `mz3` blob DEFAULT NULL,
+  `cofp1` blob DEFAULT NULL,
+  `cofp2` blob DEFAULT NULL,
+  `cofp3` blob DEFAULT NULL,
+  `freemoment1` blob DEFAULT NULL,
+  `freemoment2` blob DEFAULT NULL,
+  `freemoment3` blob DEFAULT NULL,
+  PRIMARY KEY (`fp_id`),
+  UNIQUE KEY `force_plates_raw_unique` (`session_trial`),
+  CONSTRAINT `force_plates_raw_ibfk_1` FOREIGN KEY (`session_trial`) REFERENCES `trials` (`session_trial`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.jointangles_raw
+CREATE TABLE IF NOT EXISTS `jointangles_raw` (
+  `lt_ankle_angle` text DEFAULT NULL,
+  `lt_ankle_virtual_lab_angle` text DEFAULT NULL,
+  `lt_elbow_angle` text DEFAULT NULL,
+  `lt_hip_angle` text DEFAULT NULL,
+  `lt_knee_angle` text DEFAULT NULL,
+  `lt_shoulder_angle` text DEFAULT NULL,
+  `lt_wrist_angle` text DEFAULT NULL,
+  `pelvis_angle` text DEFAULT NULL,
+  `rt_ankle_angle` text DEFAULT NULL,
+  `rt_ankle_virtual_lab_angle` text DEFAULT NULL,
+  `rt_elbow_angle` text DEFAULT NULL,
+  `rt_hip_angle` text DEFAULT NULL,
+  `rt_knee_angle` text DEFAULT NULL,
+  `rt_shoulder_angle` text DEFAULT NULL,
+  `rt_wrist_angle` text DEFAULT NULL,
+  `torso_angle` text DEFAULT NULL,
+  `torso_pelvis_angle` text DEFAULT NULL,
+  `session_trial` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.joint_angles
+CREATE TABLE IF NOT EXISTS `joint_angles` (
+  `angle_id` int(11) NOT NULL AUTO_INCREMENT,
+  `session_trial` varchar(10) NOT NULL,
+  `time` decimal(10,4) NOT NULL,
+  `rear_ankle_angle_x` decimal(10,4) DEFAULT NULL,
+  `rear_ankle_angle_y` decimal(10,4) DEFAULT NULL,
+  `rear_ankle_angle_z` decimal(10,4) DEFAULT NULL,
+  `rear_ankle_virtual_lab_angle_x` decimal(10,4) DEFAULT NULL,
+  `rear_ankle_virtual_lab_angle_y` decimal(10,4) DEFAULT NULL,
+  `rear_ankle_virtual_lab_angle_z` decimal(10,4) DEFAULT NULL,
+  `elbow_angle_x` decimal(10,4) DEFAULT NULL,
+  `elbow_angle_y` decimal(10,4) DEFAULT NULL,
+  `elbow_angle_z` decimal(10,4) DEFAULT NULL,
+  `rear_hip_angle_x` decimal(10,4) DEFAULT NULL,
+  `rear_hip_angle_y` decimal(10,4) DEFAULT NULL,
+  `rear_hip_angle_z` decimal(10,4) DEFAULT NULL,
+  `rear_knee_angle_x` decimal(10,4) DEFAULT NULL,
+  `rear_knee_angle_y` decimal(10,4) DEFAULT NULL,
+  `rear_knee_angle_z` decimal(10,4) DEFAULT NULL,
+  `shoulder_angle_x` decimal(10,4) DEFAULT NULL,
+  `shoulder_angle_y` decimal(10,4) DEFAULT NULL,
+  `shoulder_angle_z` decimal(10,4) DEFAULT NULL,
+  `wrist_angle_x` decimal(10,4) DEFAULT NULL,
+  `wrist_angle_y` decimal(10,4) DEFAULT NULL,
+  `wrist_angle_z` decimal(10,4) DEFAULT NULL,
+  `pelvis_angle_x` decimal(10,4) DEFAULT NULL,
+  `pelvis_angle_y` decimal(10,4) DEFAULT NULL,
+  `pelvis_angle_z` decimal(10,4) DEFAULT NULL,
+  `lead_ankle_angle_x` decimal(10,4) DEFAULT NULL,
+  `lead_ankle_angle_y` decimal(10,4) DEFAULT NULL,
+  `lead_ankle_angle_z` decimal(10,4) DEFAULT NULL,
+  `lead_ankle_virtual_lab_angle_x` decimal(10,4) DEFAULT NULL,
+  `lead_ankle_virtual_lab_angle_y` decimal(10,4) DEFAULT NULL,
+  `lead_ankle_virtual_lab_angle_z` decimal(10,4) DEFAULT NULL,
+  `glove_elbow_angle_x` decimal(10,4) DEFAULT NULL,
+  `glove_elbow_angle_y` decimal(10,4) DEFAULT NULL,
+  `glove_elbow_angle_z` decimal(10,4) DEFAULT NULL,
+  `lead_hip_angle_x` decimal(10,4) DEFAULT NULL,
+  `lead_hip_angle_y` decimal(10,4) DEFAULT NULL,
+  `lead_hip_angle_z` decimal(10,4) DEFAULT NULL,
+  `lead_knee_angle_x` decimal(10,4) DEFAULT NULL,
+  `lead_knee_angle_y` decimal(10,4) DEFAULT NULL,
+  `lead_knee_angle_z` decimal(10,4) DEFAULT NULL,
+  `glove_shoulder_angle_x` decimal(10,4) DEFAULT NULL,
+  `glove_shoulder_angle_y` decimal(10,4) DEFAULT NULL,
+  `glove_shoulder_angle_z` decimal(10,4) DEFAULT NULL,
+  `glove_wrist_angle_x` decimal(10,4) DEFAULT NULL,
+  `glove_wrist_angle_y` decimal(10,4) DEFAULT NULL,
+  `glove_wrist_angle_z` decimal(10,4) DEFAULT NULL,
+  `torso_angle_x` decimal(10,4) DEFAULT NULL,
+  `torso_angle_y` decimal(10,4) DEFAULT NULL,
+  `torso_angle_z` decimal(10,4) DEFAULT NULL,
+  `torso_pelvis_angle_x` decimal(10,4) DEFAULT NULL,
+  `torso_pelvis_angle_y` decimal(10,4) DEFAULT NULL,
+  `torso_pelvis_angle_z` decimal(10,4) DEFAULT NULL,
+  PRIMARY KEY (`angle_id`),
+  UNIQUE KEY `joint_angles_unique` (`session_trial`,`time`),
+  CONSTRAINT `joint_angles_ibfk_1` FOREIGN KEY (`session_trial`) REFERENCES `trials` (`session_trial`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=19930313 DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.joint_angles_raw
+CREATE TABLE IF NOT EXISTS `joint_angles_raw` (
+  `ja_id` int(11) NOT NULL AUTO_INCREMENT,
+  `session_trial` varchar(10) NOT NULL,
+  `lt_ankle_angle` blob DEFAULT NULL,
+  `lt_ankle_virtual_lab_angle` blob DEFAULT NULL,
+  `lt_elbow_angle` blob DEFAULT NULL,
+  `lt_hip_angle` blob DEFAULT NULL,
+  `lt_knee_angle` blob DEFAULT NULL,
+  `lt_shoulder_angle` blob DEFAULT NULL,
+  `lt_wrist_angle` blob DEFAULT NULL,
+  `pelvis_angle` blob DEFAULT NULL,
+  `rt_ankle_angle` blob DEFAULT NULL,
+  `rt_ankle_virtual_lab_angle` blob DEFAULT NULL,
+  `rt_elbow_angle` blob DEFAULT NULL,
+  `rt_hip_angle` blob DEFAULT NULL,
+  `rt_knee_angle` blob DEFAULT NULL,
+  `rt_shoulder_angle` blob DEFAULT NULL,
+  `rt_wrist_angle` blob DEFAULT NULL,
+  `torso_angle` blob DEFAULT NULL,
+  `torso_pelvis_angle` blob DEFAULT NULL,
+  PRIMARY KEY (`ja_id`),
+  UNIQUE KEY `joint_angles_raw_unique` (`session_trial`),
+  CONSTRAINT `joint_angles_raw_ibfk_1` FOREIGN KEY (`session_trial`) REFERENCES `trials` (`session_trial`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=37556 DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.joint_forces
+CREATE TABLE IF NOT EXISTS `joint_forces` (
+  `jointforce_id` int(11) NOT NULL AUTO_INCREMENT,
+  `session_trial` varchar(10) NOT NULL,
+  `time` decimal(10,4) NOT NULL,
+  `elbow_force_x` decimal(10,4) DEFAULT NULL,
+  `elbow_force_y` decimal(10,4) DEFAULT NULL,
+  `elbow_force_z` decimal(10,4) DEFAULT NULL,
+  `shoulder_upper_arm_force_x` decimal(10,4) DEFAULT NULL,
+  `shoulder_upper_arm_force_y` decimal(10,4) DEFAULT NULL,
+  `shoulder_upper_arm_force_z` decimal(10,4) DEFAULT NULL,
+  `shoulder_thorax_force_x` decimal(10,4) DEFAULT NULL,
+  `shoulder_thorax_force_y` decimal(10,4) DEFAULT NULL,
+  `shoulder_thorax_force_z` decimal(10,4) DEFAULT NULL,
+  `wrist_force_x` decimal(10,4) DEFAULT NULL,
+  `wrist_force_y` decimal(10,4) DEFAULT NULL,
+  `wrist_force_z` decimal(10,4) DEFAULT NULL,
+  `glove_elbow_force_x` decimal(10,4) DEFAULT NULL,
+  `glove_elbow_force_y` decimal(10,4) DEFAULT NULL,
+  `glove_elbow_force_z` decimal(10,4) DEFAULT NULL,
+  `glove_shoulder_glove_upper_arm_force_x` decimal(10,4) DEFAULT NULL,
+  `glove_shoulder_glove_upper_arm_force_y` decimal(10,4) DEFAULT NULL,
+  `glove_shoulder_glove_upper_arm_force_z` decimal(10,4) DEFAULT NULL,
+  `glove_shoulder_thorax_force_x` decimal(10,4) DEFAULT NULL,
+  `glove_shoulder_thorax_force_y` decimal(10,4) DEFAULT NULL,
+  `glove_shoulder_thorax_force_z` decimal(10,4) DEFAULT NULL,
+  `glove_wrist_force_x` decimal(10,4) DEFAULT NULL,
+  `glove_wrist_force_y` decimal(10,4) DEFAULT NULL,
+  `glove_wrist_force_z` decimal(10,4) DEFAULT NULL,
+  PRIMARY KEY (`jointforce_id`),
+  UNIQUE KEY `joint_forces_unique` (`session_trial`,`time`),
+  CONSTRAINT `joint_forces_ibfk_1` FOREIGN KEY (`session_trial`) REFERENCES `trials` (`session_trial`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=19930321 DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.joint_moments
+CREATE TABLE IF NOT EXISTS `joint_moments` (
+  `jointmoment_id` int(11) NOT NULL AUTO_INCREMENT,
+  `session_trial` varchar(10) NOT NULL,
+  `time` decimal(10,4) NOT NULL,
+  `elbow_moment_x` decimal(10,4) DEFAULT NULL,
+  `elbow_moment_y` decimal(10,4) DEFAULT NULL,
+  `elbow_moment_z` decimal(10,4) DEFAULT NULL,
+  `shoulder_thorax_moment_x` decimal(10,4) DEFAULT NULL,
+  `shoulder_thorax_moment_y` decimal(10,4) DEFAULT NULL,
+  `shoulder_thorax_moment_z` decimal(10,4) DEFAULT NULL,
+  `shoulder_upper_arm_moment_x` decimal(10,4) DEFAULT NULL,
+  `shoulder_upper_arm_moment_y` decimal(10,4) DEFAULT NULL,
+  `shoulder_upper_arm_moment_z` decimal(10,4) DEFAULT NULL,
+  `wrist_moment_x` decimal(10,4) DEFAULT NULL,
+  `wrist_moment_y` decimal(10,4) DEFAULT NULL,
+  `wrist_moment_z` decimal(10,4) DEFAULT NULL,
+  `glove_elbow_moment_x` decimal(10,4) DEFAULT NULL,
+  `glove_elbow_moment_y` decimal(10,4) DEFAULT NULL,
+  `glove_elbow_moment_z` decimal(10,4) DEFAULT NULL,
+  `glove_shoulder_glove_upper_arm_moment_x` decimal(10,4) DEFAULT NULL,
+  `glove_shoulder_glove_upper_arm_moment_y` decimal(10,4) DEFAULT NULL,
+  `glove_shoulder_glove_upper_arm_moment_z` decimal(10,4) DEFAULT NULL,
+  `glove_shoulder_thorax_moment_x` decimal(10,4) DEFAULT NULL,
+  `glove_shoulder_thorax_moment_y` decimal(10,4) DEFAULT NULL,
+  `glove_shoulder_thorax_moment_z` decimal(10,4) DEFAULT NULL,
+  `glove_wrist_moment_x` decimal(10,4) DEFAULT NULL,
+  `glove_wrist_moment_y` decimal(10,4) DEFAULT NULL,
+  `glove_wrist_moment_z` decimal(10,4) DEFAULT NULL,
+  PRIMARY KEY (`jointmoment_id`),
+  UNIQUE KEY `joint_moments_unique` (`session_trial`,`time`),
+  CONSTRAINT `joint_moments_ibfk_1` FOREIGN KEY (`session_trial`) REFERENCES `trials` (`session_trial`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=19931071 DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.joint_velos
+CREATE TABLE IF NOT EXISTS `joint_velos` (
+  `velo_id` int(11) NOT NULL AUTO_INCREMENT,
+  `session_trial` varchar(10) NOT NULL,
+  `time` decimal(10,4) NOT NULL,
+  `elbow_velo_x` decimal(10,4) DEFAULT NULL,
+  `elbow_velo_y` decimal(10,4) DEFAULT NULL,
+  `elbow_velo_z` decimal(10,4) DEFAULT NULL,
+  `rear_hip_velo_x` decimal(10,4) DEFAULT NULL,
+  `rear_hip_velo_y` decimal(10,4) DEFAULT NULL,
+  `rear_hip_velo_z` decimal(10,4) DEFAULT NULL,
+  `rear_knee_velo_x` decimal(10,4) DEFAULT NULL,
+  `rear_knee_velo_y` decimal(10,4) DEFAULT NULL,
+  `rear_knee_velo_z` decimal(10,4) DEFAULT NULL,
+  `shoulder_velo_x` decimal(10,4) DEFAULT NULL,
+  `shoulder_velo_y` decimal(10,4) DEFAULT NULL,
+  `shoulder_velo_z` decimal(10,4) DEFAULT NULL,
+  `wrist_velo_x` decimal(10,4) DEFAULT NULL,
+  `wrist_velo_y` decimal(10,4) DEFAULT NULL,
+  `wrist_velo_z` decimal(10,4) DEFAULT NULL,
+  `pelvis_velo_x` decimal(10,4) DEFAULT NULL,
+  `pelvis_velo_y` decimal(10,4) DEFAULT NULL,
+  `pelvis_velo_z` decimal(10,4) DEFAULT NULL,
+  `glove_elbow_velo_x` decimal(10,4) DEFAULT NULL,
+  `glove_elbow_velo_y` decimal(10,4) DEFAULT NULL,
+  `glove_elbow_velo_z` decimal(10,4) DEFAULT NULL,
+  `lead_hip_velo_x` decimal(10,4) DEFAULT NULL,
+  `lead_hip_velo_y` decimal(10,4) DEFAULT NULL,
+  `lead_hip_velo_z` decimal(10,4) DEFAULT NULL,
+  `lead_knee_velo_x` decimal(10,4) DEFAULT NULL,
+  `lead_knee_velo_y` decimal(10,4) DEFAULT NULL,
+  `lead_knee_velo_z` decimal(10,4) DEFAULT NULL,
+  `glove_shoulder_velo_x` decimal(10,4) DEFAULT NULL,
+  `glove_shoulder_velo_y` decimal(10,4) DEFAULT NULL,
+  `glove_shoulder_velo_z` decimal(10,4) DEFAULT NULL,
+  `glove_wrist_velo_x` decimal(10,4) DEFAULT NULL,
+  `glove_wrist_velo_y` decimal(10,4) DEFAULT NULL,
+  `glove_wrist_velo_z` decimal(10,4) DEFAULT NULL,
+  `torso_velo_x` decimal(10,4) DEFAULT NULL,
+  `torso_velo_y` decimal(10,4) DEFAULT NULL,
+  `torso_velo_z` decimal(10,4) DEFAULT NULL,
+  `torso_pelvis_velo_x` decimal(10,4) DEFAULT NULL,
+  `torso_pelvis_velo_y` decimal(10,4) DEFAULT NULL,
+  `torso_pelvis_velo_z` decimal(10,4) DEFAULT NULL,
+  PRIMARY KEY (`velo_id`),
+  UNIQUE KEY `joint_velos_unique` (`session_trial`,`time`),
+  CONSTRAINT `joint_velos_ibfk_1` FOREIGN KEY (`session_trial`) REFERENCES `trials` (`session_trial`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=19926058 DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.joint_velos_raw
+CREATE TABLE IF NOT EXISTS `joint_velos_raw` (
+  `jv_id` int(11) NOT NULL AUTO_INCREMENT,
+  `session_trial` varchar(10) NOT NULL,
+  `lt_elbow_jointVel` blob DEFAULT NULL,
+  `lt_hip_jointVel` blob DEFAULT NULL,
+  `lt_knee_jointVel` blob DEFAULT NULL,
+  `lt_shoulder_jointVel` blob DEFAULT NULL,
+  `lt_wrist_jointVel` blob DEFAULT NULL,
+  `pelvis_jointVel` blob DEFAULT NULL,
+  `rt_elbow_jointVel` blob DEFAULT NULL,
+  `rt_hip_jointVel` blob DEFAULT NULL,
+  `rt_knee_jointVel` blob DEFAULT NULL,
+  `rt_shoulder_jointVel` blob DEFAULT NULL,
+  `rt_wrist_jointVel` blob DEFAULT NULL,
+  `torso_jointVel` blob DEFAULT NULL,
+  `torso_pelvis_jointVel` blob DEFAULT NULL,
+  `lt_hand_global_jointVel` blob DEFAULT NULL,
+  `lt_shoulder_global_jointVel` blob DEFAULT NULL,
+  `rt_hand_global_jointVel` blob DEFAULT NULL,
+  `rt_shoulder_global_jointVel` blob DEFAULT NULL,
+  PRIMARY KEY (`jv_id`),
+  UNIQUE KEY `joint_velos_raw_unique` (`session_trial`),
+  CONSTRAINT `joint_velos_raw_ibfk_1` FOREIGN KEY (`session_trial`) REFERENCES `trials` (`session_trial`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=37435 DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.kinetics_raw
+CREATE TABLE IF NOT EXISTS `kinetics_raw` (
+  `k_id` int(11) NOT NULL AUTO_INCREMENT,
+  `session_trial` varchar(10) NOT NULL,
+  `lar_proxEndForce` blob DEFAULT NULL,
+  `lfa_proxEndForce` blob DEFAULT NULL,
+  `lft_proxEndForce` blob DEFAULT NULL,
+  `lha_proxEndForce` blob DEFAULT NULL,
+  `lsk_proxEndForce` blob DEFAULT NULL,
+  `lth_proxEndForce` blob DEFAULT NULL,
+  `lto_proxEndForce` blob DEFAULT NULL,
+  `rar_proxEndForce` blob DEFAULT NULL,
+  `rfa_proxEndForce` blob DEFAULT NULL,
+  `rft_proxEndForce` blob DEFAULT NULL,
+  `rha_proxEndForce` blob DEFAULT NULL,
+  `rhe_proxEndForce` blob DEFAULT NULL,
+  `rpv_proxEndForce` blob DEFAULT NULL,
+  `rsk_proxEndForce` blob DEFAULT NULL,
+  `rta_proxEndForce` blob DEFAULT NULL,
+  `rth_proxEndForce` blob DEFAULT NULL,
+  `rto_proxEndForce` blob DEFAULT NULL,
+  `rtx_proxEndForce` blob DEFAULT NULL,
+  `lar_proxEndMoment` blob DEFAULT NULL,
+  `lfa_proxEndMoment` blob DEFAULT NULL,
+  `lft_proxEndMoment` blob DEFAULT NULL,
+  `lha_proxEndMoment` blob DEFAULT NULL,
+  `lsk_proxEndMoment` blob DEFAULT NULL,
+  `lth_proxEndMoment` blob DEFAULT NULL,
+  `lto_proxEndMoment` blob DEFAULT NULL,
+  `rar_proxEndMoment` blob DEFAULT NULL,
+  `rfa_proxEndMoment` blob DEFAULT NULL,
+  `rft_proxEndMoment` blob DEFAULT NULL,
+  `rha_proxEndMoment` blob DEFAULT NULL,
+  `rhe_proxEndMoment` blob DEFAULT NULL,
+  `rpv_proxEndMoment` blob DEFAULT NULL,
+  `rsk_proxEndMoment` blob DEFAULT NULL,
+  `rta_proxEndMoment` blob DEFAULT NULL,
+  `rth_proxEndMoment` blob DEFAULT NULL,
+  `rto_proxEndMoment` blob DEFAULT NULL,
+  `rtx_proxEndMoment` blob DEFAULT NULL,
+  PRIMARY KEY (`k_id`),
+  UNIQUE KEY `kinetics_raw_unique` (`session_trial`),
+  CONSTRAINT `kinetics_raw_ibfk_1` FOREIGN KEY (`session_trial`) REFERENCES `trials` (`session_trial`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=37434 DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.landmarks_raw
+CREATE TABLE IF NOT EXISTS `landmarks_raw` (
+  `lm_id` int(11) NOT NULL AUTO_INCREMENT,
+  `session_trial` varchar(10) NOT NULL,
+  `l_heel` blob DEFAULT NULL,
+  `r_heel` blob DEFAULT NULL,
+  PRIMARY KEY (`lm_id`),
+  UNIQUE KEY `landmarks_raw_unique` (`session_trial`),
+  CONSTRAINT `landmarks_raw_ibfk_1` FOREIGN KEY (`session_trial`) REFERENCES `trials` (`session_trial`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=35947 DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.limb_lengths
+CREATE TABLE IF NOT EXISTS `limb_lengths` (
+  `limblength_id` int(11) NOT NULL AUTO_INCREMENT,
+  `session_trial` varchar(10) NOT NULL,
+  `upper_arm_length` decimal(10,4) DEFAULT NULL,
+  `forearm_length` decimal(10,4) DEFAULT NULL,
+  `rear_shank_length` decimal(10,4) DEFAULT NULL,
+  `rear_thigh_length` decimal(10,4) DEFAULT NULL,
+  `glove_upper_arm_length` decimal(10,4) DEFAULT NULL,
+  `glove_forearm_length` decimal(10,4) DEFAULT NULL,
+  `lead_shank_length` decimal(10,4) DEFAULT NULL,
+  `lead_thigh_length` decimal(10,4) DEFAULT NULL,
+  PRIMARY KEY (`limblength_id`),
+  UNIQUE KEY `limb_lengths_unique` (`session_trial`),
+  CONSTRAINT `limb_lengths_ibfk_1` FOREIGN KEY (`session_trial`) REFERENCES `trials` (`session_trial`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=44715 DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.model_com
+CREATE TABLE IF NOT EXISTS `model_com` (
+  `com_id` int(11) NOT NULL AUTO_INCREMENT,
+  `session_trial` varchar(10) NOT NULL,
+  `time` decimal(10,4) NOT NULL,
+  `model_com_pos_x` decimal(10,4) DEFAULT NULL,
+  `model_com_pos_y` decimal(10,4) DEFAULT NULL,
+  `model_com_pos_z` decimal(10,4) DEFAULT NULL,
+  `model_com_velo_x` decimal(10,4) DEFAULT NULL,
+  `model_com_velo_y` decimal(10,4) DEFAULT NULL,
+  `model_com_velo_z` decimal(10,4) DEFAULT NULL,
+  `dir_2d` decimal(10,4) DEFAULT NULL,
+  `dir_3d` decimal(10,4) DEFAULT NULL,
+  PRIMARY KEY (`com_id`) USING BTREE,
+  UNIQUE KEY `model_com_unique` (`session_trial`,`time`) USING BTREE,
+  CONSTRAINT `model_com_ibfk_1` FOREIGN KEY (`session_trial`) REFERENCES `trials` (`session_trial`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=19576052 DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.poi
+CREATE TABLE IF NOT EXISTS `poi` (
+  `poi_id` int(11) NOT NULL AUTO_INCREMENT,
+  `session_trial` varchar(10) NOT NULL,
+  `pitch_speed_mph` decimal(10,4) DEFAULT NULL,
+  `max_shoulder_internal_rotational_velo` decimal(10,4) NOT NULL,
+  `max_elbow_extension_velo` decimal(10,4) NOT NULL,
+  `max_torso_rotational_velo` decimal(10,4) NOT NULL,
+  `max_rotation_hip_shoulder_separation` decimal(10,4) NOT NULL,
+  `max_elbow_flexion` decimal(10,4) NOT NULL,
+  `max_shoulder_external_rotation` decimal(10,4) NOT NULL,
+  `elbow_flexion_fp` decimal(10,4) NOT NULL,
+  `elbow_pronation_fp` decimal(10,4) NOT NULL,
+  `rotation_hip_shoulder_separation_fp` decimal(10,4) NOT NULL,
+  `shoulder_horizontal_abduction_fp` decimal(10,4) NOT NULL,
+  `shoulder_abduction_fp` decimal(10,4) NOT NULL,
+  `shoulder_external_rotation_fp` decimal(10,4) NOT NULL,
+  `lead_knee_extension_angular_velo_fp` decimal(10,4) NOT NULL,
+  `lead_knee_extension_angular_velo_br` decimal(10,4) NOT NULL,
+  `lead_knee_extension_angular_velo_max` decimal(10,4) NOT NULL,
+  `torso_anterior_tilt_fp` decimal(10,4) NOT NULL,
+  `torso_lateral_tilt_fp` decimal(10,4) NOT NULL,
+  `torso_rotation_fp` decimal(10,4) NOT NULL,
+  `pelvis_anterior_tilt_fp` decimal(10,4) NOT NULL,
+  `pelvis_lateral_tilt_fp` decimal(10,4) NOT NULL,
+  `pelvis_rotation_fp` decimal(10,4) NOT NULL,
+  `max_cog_velo_x` decimal(10,4) NOT NULL,
+  `torso_rotation_min` decimal(10,4) NOT NULL,
+  `max_pelvis_rotational_velo` decimal(10,4) NOT NULL,
+  `glove_shoulder_horizontal_abduction_fp` decimal(10,4) NOT NULL,
+  `glove_shoulder_abduction_fp` decimal(10,4) NOT NULL,
+  `glove_shoulder_external_rotation_fp` decimal(10,4) NOT NULL,
+  `glove_shoulder_abduction_mer` decimal(10,4) NOT NULL,
+  `elbow_flexion_mer` decimal(10,4) NOT NULL,
+  `torso_anterior_tilt_mer` decimal(10,4) NOT NULL,
+  `torso_lateral_tilt_mer` decimal(10,4) NOT NULL,
+  `torso_rotation_mer` decimal(10,4) NOT NULL,
+  `elbow_varus_moment` decimal(10,4) NOT NULL,
+  `shoulder_internal_rotation_moment` decimal(10,4) NOT NULL,
+  `torso_anterior_tilt_br` decimal(10,4) NOT NULL,
+  `torso_lateral_tilt_br` decimal(10,4) NOT NULL,
+  `torso_rotation_br` decimal(10,4) NOT NULL,
+  `lead_knee_extension_from_fp_to_br` decimal(10,4) NOT NULL,
+  `cog_velo_pkh` decimal(10,4) NOT NULL,
+  `stride_length` decimal(10,4) NOT NULL,
+  `stride_angle` decimal(10,4) NOT NULL,
+  `arm_slot` decimal(10,4) NOT NULL,
+  `timing_peak_torso_to_peak_pelvis_rot_velo` decimal(10,4) NOT NULL,
+  `max_shoulder_horizontal_abduction` decimal(10,4) NOT NULL,
+  `shoulder_transfer_fp_br` decimal(10,4) DEFAULT NULL,
+  `shoulder_generation_fp_br` decimal(10,4) DEFAULT NULL,
+  `shoulder_absorption_fp_br` decimal(10,4) DEFAULT NULL,
+  `elbow_transfer_fp_br` decimal(10,4) DEFAULT NULL,
+  `elbow_generation_fp_br` decimal(10,4) DEFAULT NULL,
+  `elbow_absorption_fp_br` decimal(10,4) DEFAULT NULL,
+  `thorax_distal_transfer_fp_br` decimal(10,4) DEFAULT NULL,
+  PRIMARY KEY (`poi_id`),
+  UNIQUE KEY `poi_unique` (`session_trial`),
+  CONSTRAINT `poi_ibfk_1` FOREIGN KEY (`session_trial`) REFERENCES `trials` (`session_trial`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=55839 DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.poi_corr
+CREATE TABLE IF NOT EXISTS `poi_corr` (
+  `session_trial` text DEFAULT NULL,
+  `pitch_speed_mph` double DEFAULT NULL,
+  `max_shoulder_internal_rotational_velo` double DEFAULT NULL,
+  `max_elbow_extension_velo` double DEFAULT NULL,
+  `max_torso_rotational_velo` double DEFAULT NULL,
+  `max_rotation_hip_shoulder_separation` double DEFAULT NULL,
+  `max_elbow_flexion` double DEFAULT NULL,
+  `max_shoulder_external_rotation` double DEFAULT NULL,
+  `elbow_flexion_fp` double DEFAULT NULL,
+  `elbow_pronation_fp` double DEFAULT NULL,
+  `rotation_hip_shoulder_separation_fp` double DEFAULT NULL,
+  `shoulder_horizontal_abduction_fp` double DEFAULT NULL,
+  `shoulder_abduction_fp` double DEFAULT NULL,
+  `shoulder_external_rotation_fp` double DEFAULT NULL,
+  `lead_knee_extension_angular_velo_fp` double DEFAULT NULL,
+  `lead_knee_extension_angular_velo_br` double DEFAULT NULL,
+  `lead_knee_extension_angular_velo_max` double DEFAULT NULL,
+  `torso_anterior_tilt_fp` double DEFAULT NULL,
+  `torso_lateral_tilt_fp` double DEFAULT NULL,
+  `torso_rotation_fp` double DEFAULT NULL,
+  `pelvis_anterior_tilt_fp` double DEFAULT NULL,
+  `pelvis_lateral_tilt_fp` double DEFAULT NULL,
+  `pelvis_rotation_fp` double DEFAULT NULL,
+  `max_cog_velo_x` double DEFAULT NULL,
+  `torso_rotation_min` double DEFAULT NULL,
+  `max_pelvis_rotational_velo` double DEFAULT NULL,
+  `glove_shoulder_horizontal_abduction_fp` double DEFAULT NULL,
+  `glove_shoulder_abduction_fp` double DEFAULT NULL,
+  `glove_shoulder_external_rotation_fp` double DEFAULT NULL,
+  `glove_shoulder_abduction_mer` double DEFAULT NULL,
+  `elbow_flexion_mer` double DEFAULT NULL,
+  `torso_anterior_tilt_mer` double DEFAULT NULL,
+  `torso_lateral_tilt_mer` double DEFAULT NULL,
+  `torso_rotation_mer` double DEFAULT NULL,
+  `elbow_varus_moment` double DEFAULT NULL,
+  `shoulder_internal_rotation_moment` double DEFAULT NULL,
+  `torso_anterior_tilt_br` double DEFAULT NULL,
+  `torso_lateral_tilt_br` double DEFAULT NULL,
+  `torso_rotation_br` double DEFAULT NULL,
+  `lead_knee_extension_from_fp_to_br` double DEFAULT NULL,
+  `cog_velo_pkh` double DEFAULT NULL,
+  `stride_length` double DEFAULT NULL,
+  `stride_angle` double DEFAULT NULL,
+  `arm_slot` double DEFAULT NULL,
+  `timing_peak_torso_to_peak_pelvis_rot_velo` double DEFAULT NULL,
+  `max_shoulder_horizontal_abduction` double DEFAULT NULL,
+  `shoulder_transfer_fp_br` double DEFAULT NULL,
+  `shoulder_generation_fp_br` double DEFAULT NULL,
+  `shoulder_absorption_fp_br` double DEFAULT NULL,
+  `elbow_transfer_fp_br` double DEFAULT NULL,
+  `elbow_generation_fp_br` double DEFAULT NULL,
+  `elbow_absorption_fp_br` double DEFAULT NULL,
+  `thorax_distal_transfer_fp_br` double DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.processing_metadata
+CREATE TABLE IF NOT EXISTS `processing_metadata` (
+  `trial_name` varchar(512) NOT NULL,
+  `session_trial` varchar(10) DEFAULT NULL,
+  `theia_name` varchar(512) NOT NULL,
+  `cal_used` varchar(512) NOT NULL,
+  `time_processed` datetime NOT NULL,
+  `v3d_time_processed` datetime DEFAULT NULL,
+  `videos` longtext NOT NULL,
+  `created` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`trial_name`),
+  UNIQUE KEY `theia_name` (`theia_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.rot_mats_raw
+CREATE TABLE IF NOT EXISTS `rot_mats_raw` (
+  `rm_id` int(11) NOT NULL AUTO_INCREMENT,
+  `session_trial` varchar(10) NOT NULL,
+  `head_rotMat` blob DEFAULT NULL,
+  `l_foot_rotMat` blob DEFAULT NULL,
+  `l_hand_rotMat` blob DEFAULT NULL,
+  `l_larm_rotMat` blob DEFAULT NULL,
+  `l_shank_rotMat` blob DEFAULT NULL,
+  `l_thigh_rotMat` blob DEFAULT NULL,
+  `l_toes_rotMat` blob DEFAULT NULL,
+  `l_uarm_rotMat` blob DEFAULT NULL,
+  `pelvis_rotMat` blob DEFAULT NULL,
+  `pelvis_shifted_rotMat` blob DEFAULT NULL,
+  `r_foot_rotMat` blob DEFAULT NULL,
+  `r_hand_rotMat` blob DEFAULT NULL,
+  `r_larm_rotMat` blob DEFAULT NULL,
+  `r_shank_rotMat` blob DEFAULT NULL,
+  `r_thigh_rotMat` blob DEFAULT NULL,
+  `r_toes_rotMat` blob DEFAULT NULL,
+  `r_uarm_rotMat` blob DEFAULT NULL,
+  `torso_rotMat` blob DEFAULT NULL,
+  `vlb_rotMat` blob DEFAULT NULL,
+  `worldbody_rotMat` blob DEFAULT NULL,
+  PRIMARY KEY (`rm_id`),
+  UNIQUE KEY `rot_mats_raw_unique` (`session_trial`),
+  CONSTRAINT `rot_mats_raw_ibfk_1` FOREIGN KEY (`session_trial`) REFERENCES `trials` (`session_trial`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=37434 DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.segment_positions_raw
+CREATE TABLE IF NOT EXISTS `segment_positions_raw` (
+  `sp_id` int(11) NOT NULL AUTO_INCREMENT,
+  `session_trial` varchar(10) NOT NULL,
+  `lar_CoMPos` blob DEFAULT NULL,
+  `lar_distEndPos` blob DEFAULT NULL,
+  `lar_proxEndPos` blob DEFAULT NULL,
+  `lfa_CoMPos` blob DEFAULT NULL,
+  `lfa_distEndPos` blob DEFAULT NULL,
+  `lfa_proxEndPos` blob DEFAULT NULL,
+  `lft_CoMPos` blob DEFAULT NULL,
+  `lft_distEndPos` blob DEFAULT NULL,
+  `lft_proxEndPos` blob DEFAULT NULL,
+  `lha_CoMPos` blob DEFAULT NULL,
+  `lha_distEndPos` blob DEFAULT NULL,
+  `lha_proxEndPos` blob DEFAULT NULL,
+  `lsk_CoMPos` blob DEFAULT NULL,
+  `lsk_distEndPos` blob DEFAULT NULL,
+  `lsk_proxEndPos` blob DEFAULT NULL,
+  `lth_CoMPos` blob DEFAULT NULL,
+  `lth_distEndPos` blob DEFAULT NULL,
+  `lth_proxEndPos` blob DEFAULT NULL,
+  `lto_CoMPos` blob DEFAULT NULL,
+  `lto_distEndPos` blob DEFAULT NULL,
+  `lto_proxEndPos` blob DEFAULT NULL,
+  `rar_CoMPos` blob DEFAULT NULL,
+  `rar_distEndPos` blob DEFAULT NULL,
+  `rar_proxEndPos` blob DEFAULT NULL,
+  `rfa_CoMPos` blob DEFAULT NULL,
+  `rfa_distEndPos` blob DEFAULT NULL,
+  `rfa_proxEndPos` blob DEFAULT NULL,
+  `rft_CoMPos` blob DEFAULT NULL,
+  `rft_distEndPos` blob DEFAULT NULL,
+  `rft_proxEndPos` blob DEFAULT NULL,
+  `rha_CoMPos` blob DEFAULT NULL,
+  `rha_distEndPos` blob DEFAULT NULL,
+  `rha_proxEndPos` blob DEFAULT NULL,
+  `rhe_CoMPos` blob DEFAULT NULL,
+  `rhe_distEndPos` blob DEFAULT NULL,
+  `rhe_proxEndPos` blob DEFAULT NULL,
+  `rpv_CoMPos` blob DEFAULT NULL,
+  `rpv_distEndPos` blob DEFAULT NULL,
+  `rpv_proxEndPos` blob DEFAULT NULL,
+  `rsk_CoMPos` blob DEFAULT NULL,
+  `rsk_distEndPos` blob DEFAULT NULL,
+  `rsk_proxEndPos` blob DEFAULT NULL,
+  `rta_CoMPos` blob DEFAULT NULL,
+  `rta_distEndPos` blob DEFAULT NULL,
+  `rta_proxEndPos` blob DEFAULT NULL,
+  `rth_CoMPos` blob DEFAULT NULL,
+  `rth_distEndPos` blob DEFAULT NULL,
+  `rth_proxEndPos` blob DEFAULT NULL,
+  `rto_CoMPos` blob DEFAULT NULL,
+  `rto_distEndPos` blob DEFAULT NULL,
+  `rto_proxEndPos` blob DEFAULT NULL,
+  `rtx_CoMPos` blob DEFAULT NULL,
+  `rtx_distEndPos` blob DEFAULT NULL,
+  `rtx_proxEndPos` blob DEFAULT NULL,
+  `model_CoMPos` blob DEFAULT NULL,
+  PRIMARY KEY (`sp_id`),
+  UNIQUE KEY `segment_positions_raw_unique` (`session_trial`),
+  CONSTRAINT `segment_positions_raw_ibfk_1` FOREIGN KEY (`session_trial`) REFERENCES `trials` (`session_trial`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=37434 DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.sessions
+CREATE TABLE IF NOT EXISTS `sessions` (
+  `user` int(11) NOT NULL,
+  `session` int(11) NOT NULL AUTO_INCREMENT,
+  `date` date NOT NULL,
+  `level` varchar(50) NOT NULL,
+  `lab` varchar(50) NOT NULL,
+  `tag` varchar(50) DEFAULT NULL,
+  `height_meters` decimal(10,4) NOT NULL,
+  `mass_kilograms` decimal(10,4) NOT NULL,
+  `trial_count` smallint(6) DEFAULT NULL,
+  `good_files` longtext DEFAULT NULL,
+  `bad_files` longtext DEFAULT NULL,
+  `unused_files` longtext DEFAULT NULL,
+  `report_files` longtext DEFAULT NULL,
+  `created` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `irb` bit(1) DEFAULT NULL,
+  `comp_scores` bit(1) DEFAULT NULL,
+  `drill_scores` bit(1) DEFAULT NULL,
+  `video_report` bit(1) DEFAULT NULL,
+  PRIMARY KEY (`session`),
+  KEY `user` (`user`),
+  CONSTRAINT `sessions_ibfk_1` FOREIGN KEY (`user`) REFERENCES `users` (`user`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2475 DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.targets_raw
+CREATE TABLE IF NOT EXISTS `targets_raw` (
+  `t_id` int(11) NOT NULL AUTO_INCREMENT,
+  `session_trial` varchar(10) NOT NULL,
+  `c7` blob DEFAULT NULL,
+  `clav` blob DEFAULT NULL,
+  `lank` blob DEFAULT NULL,
+  `lasi` blob DEFAULT NULL,
+  `lbak` blob DEFAULT NULL,
+  `lbhd` blob DEFAULT NULL,
+  `lelb` blob DEFAULT NULL,
+  `lfhd` blob DEFAULT NULL,
+  `lfin` blob DEFAULT NULL,
+  `lfrm` blob DEFAULT NULL,
+  `lhee` blob DEFAULT NULL,
+  `lic` blob DEFAULT NULL,
+  `lkne` blob DEFAULT NULL,
+  `lmank` blob DEFAULT NULL,
+  `lmelb` blob DEFAULT NULL,
+  `lmkne` blob DEFAULT NULL,
+  `lpsi` blob DEFAULT NULL,
+  `lsho` blob DEFAULT NULL,
+  `lthi` blob DEFAULT NULL,
+  `ltib` blob DEFAULT NULL,
+  `ltoe` blob DEFAULT NULL,
+  `lupa` blob DEFAULT NULL,
+  `lwra` blob DEFAULT NULL,
+  `lwrb` blob DEFAULT NULL,
+  `rank` blob DEFAULT NULL,
+  `rasi` blob DEFAULT NULL,
+  `rbak` blob DEFAULT NULL,
+  `rbhd` blob DEFAULT NULL,
+  `relb` blob DEFAULT NULL,
+  `rfhd` blob DEFAULT NULL,
+  `rfin` blob DEFAULT NULL,
+  `rfrm` blob DEFAULT NULL,
+  `rhee` blob DEFAULT NULL,
+  `ric` blob DEFAULT NULL,
+  `rkne` blob DEFAULT NULL,
+  `rmank` blob DEFAULT NULL,
+  `rmelb` blob DEFAULT NULL,
+  `rmkne` blob DEFAULT NULL,
+  `rpsi` blob DEFAULT NULL,
+  `rsho` blob DEFAULT NULL,
+  `rthi` blob DEFAULT NULL,
+  `rtib` blob DEFAULT NULL,
+  `rtoe` blob DEFAULT NULL,
+  `rupa` blob DEFAULT NULL,
+  `rwra` blob DEFAULT NULL,
+  `rwrb` blob DEFAULT NULL,
+  `strn` blob DEFAULT NULL,
+  `t10` blob DEFAULT NULL,
+  PRIMARY KEY (`t_id`),
+  UNIQUE KEY `targets_raw_unique` (`session_trial`),
+  CONSTRAINT `targets_raw_ibfk_1` FOREIGN KEY (`session_trial`) REFERENCES `trials` (`session_trial`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.temp
+CREATE TABLE IF NOT EXISTS `temp` (
+  `id` tinyint(4) NOT NULL AUTO_INCREMENT,
+  `updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.trials
+CREATE TABLE IF NOT EXISTS `trials` (
+  `trials_id` int(11) NOT NULL AUTO_INCREMENT,
+  `session` int(11) NOT NULL,
+  `trial` int(11) NOT NULL,
+  `session_trial` varchar(10) NOT NULL,
+  `time` time DEFAULT NULL,
+  `session_type` varchar(50) DEFAULT NULL,
+  `tag` varchar(50) DEFAULT NULL,
+  `pitch_type` varchar(10) DEFAULT NULL,
+  `ball_weight` varchar(10) DEFAULT NULL,
+  `drill_tag` varchar(50) DEFAULT NULL,
+  `style_tag` varchar(50) DEFAULT NULL,
+  `fitlines` bit(1) DEFAULT NULL,
+  `misc_tag` varchar(50) DEFAULT NULL,
+  `fs_point` int(11) NOT NULL,
+  `time_point` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`time_point`)),
+  `handedness` varchar(1) DEFAULT NULL,
+  `needs_review` bit(1) NOT NULL DEFAULT b'0',
+  `bad_datas_point` bit(1) NOT NULL DEFAULT b'0',
+  `bad_v3d_qa` bit(1) NOT NULL DEFAULT b'0',
+  `processed` bit(1) NOT NULL DEFAULT b'0',
+  `v7_match` bit(1) NOT NULL DEFAULT b'0',
+  `created` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `filename` varchar(100) NOT NULL,
+  `iz_trackman_pitch_id` varchar(100) DEFAULT NULL,
+  `pulse_event_id` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`trials_id`),
+  UNIQUE KEY `trials_unique` (`session_trial`),
+  UNIQUE KEY `unique_filename` (`filename`),
+  KEY `session` (`session`),
+  CONSTRAINT `trials_ibfk_1` FOREIGN KEY (`session`) REFERENCES `sessions` (`session`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=37711 DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.users
+CREATE TABLE IF NOT EXISTS `users` (
+  `user` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `dob` date NOT NULL,
+  `traq` varchar(10) DEFAULT NULL,
+  `created` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`user`),
+  UNIQUE KEY `users_unique` (`name`,`dob`,`traq`)
+) ENGINE=InnoDB AUTO_INCREMENT=1383 DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table theia_pitching_db.v7_match
+CREATE TABLE IF NOT EXISTS `v7_match` (
+  `match_id` int(11) NOT NULL AUTO_INCREMENT,
+  `theia_session_trial` varchar(10) NOT NULL,
+  `v7_session_trial` varchar(10) NOT NULL,
+  `filename` varchar(100) NOT NULL,
+  `theia_filename` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`match_id`),
+  UNIQUE KEY `theia_session_trial` (`theia_session_trial`),
+  UNIQUE KEY `filename` (`filename`),
+  CONSTRAINT `FK_v7_match_trials` FOREIGN KEY (`theia_session_trial`) REFERENCES `trials` (`session_trial`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_v7_match_trials_2` FOREIGN KEY (`filename`) REFERENCES `trials` (`filename`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=13679 DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin ROW_FORMAT=DYNAMIC;
+
+-- Data exporting was unselected.
+
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
