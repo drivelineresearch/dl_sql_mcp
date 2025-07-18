@@ -1,8 +1,28 @@
 import os
 from pathlib import Path
 
+# Create app config directory and .env file if they don't exist
+app_config_dir = Path.home() / 'AppData' / 'Roaming' / 'dl-sql-mcp'
+env_file = app_config_dir / '.env'
+
+# Create directory and template .env file on first run
+if not app_config_dir.exists():
+    app_config_dir.mkdir(parents=True, exist_ok=True)
+    
+if not env_file.exists():
+    template_content = """# DL SQL MCP Database Configuration
+# Edit the values below with your actual database credentials
+
+DB_HOST=10.200.200.107
+DB_USER=readonlyuser
+DB_PASSWORD=CHANGE_THIS_TO_YOUR_ACTUAL_PASSWORD
+"""
+    with open(env_file, 'w') as f:
+        f.write(template_content)
+    print(f"INFO: Created config file at: {env_file}")
+    print("INFO: Please edit this file with your actual database password")
+
 # Load environment variables from .env file
-env_file = Path(__file__).parent / '.env'
 if env_file.exists():
     with open(env_file) as f:
         for line in f:

@@ -14,13 +14,11 @@ Copy this into your Claude Desktop settings (Settings → MCP):
 }
 ```
 
-### Step 2: Set Database Credentials
-Create a `.env` file in your home directory with:
-```
-DB_HOST=10.200.200.107
-DB_USER=readonlyuser  
-DB_PASSWORD=your_password_here
-```
+### Step 2: Set Database Password
+On first run, the app will create a config file at:
+`C:\Users\[username]\AppData\Roaming\dl-sql-mcp\.env`
+
+Open this file and change `CHANGE_THIS_TO_YOUR_ACTUAL_PASSWORD` to your real database password.
 
 ### Step 3: Start Asking Questions!
 That's it! You can now ask Claude:
